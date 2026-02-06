@@ -1,15 +1,23 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { MOCK_DATA } from '../mockData';
+import { useAuth } from '../hooks/useAuth';
 
-export default function CurrentHistory() {
+const CurrentHistory = () => {
+    const { user } = useAuth();
     const [movements, setMovements] = useState([]);
 
     const fetchHistory = async () => {
         try {
+            if (user?.isDemo) {
+                setMovements(MOCK_DATA.movements);
+                return;
+            }
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/movements/recent`);
             setMovements(res.data);
         } catch (error) {
-            console.error("Error fetching history", error);
+            console.warn("API Error, using mock data");
+            setMovements(MOCK_DATA.movements);
         }
     };
 

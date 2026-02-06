@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { MOCK_DATA } from '../mockData';
 import CurrentHistory from '../components/CurrentHistory';
 
 export default function StockOut() {
@@ -23,6 +24,12 @@ export default function StockOut() {
 
     const fetchData = async () => {
         try {
+            if (user?.isDemo) {
+                setMaterials(MOCK_DATA.materials);
+                setWorkers(MOCK_DATA.workers);
+                setLoading(false);
+                return;
+            }
             const [matRes, workerRes] = await Promise.all([
                 axios.get(`${import.meta.env.VITE_API_URL}/materials`),
                 axios.get(`${import.meta.env.VITE_API_URL}/workers`)
@@ -31,7 +38,10 @@ export default function StockOut() {
             setWorkers(workerRes.data);
             setLoading(false);
         } catch (error) {
-            console.error('Error loading data', error);
+            console.warn("API Error, using mock data");
+            setMaterials(MOCK_DATA.materials);
+            setWorkers(MOCK_DATA.workers);
+            setLoading(false);
         }
     };
 
@@ -55,6 +65,13 @@ export default function StockOut() {
         try {
             if (cart.length === 0 || !selectedWorker) {
                 alert('Complete el formulario');
+                return;
+            }
+
+            if (user?.isDemo) {
+                alert('Success (Demo Mode): Tools assigned');
+                setCart([]);
+                setSelectedWorker('');
                 return;
             }
 

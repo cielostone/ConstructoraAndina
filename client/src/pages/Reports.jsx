@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { MOCK_DATA } from '../mockData';
+import { useAuth } from '../context/AuthContext';
 
 export default function Reports() {
     const [materials, setMaterials] = useState([]);
@@ -10,10 +12,15 @@ export default function Reports() {
 
     const fetchMaterials = async () => {
         try {
+            if (user?.isDemo) {
+                setMaterials(MOCK_DATA.materials);
+                return;
+            }
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/materials`);
             setMaterials(res.data);
         } catch (error) {
-            console.error('Error loading materials', error);
+            console.warn("API Error, using mock data");
+            setMaterials(MOCK_DATA.materials);
         }
     };
 

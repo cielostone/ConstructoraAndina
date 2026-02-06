@@ -1,18 +1,19 @@
 import { createContext, useState, useContext, useEffect } from 'react';
 import axios from 'axios';
+import { MOCK_DATA } from '../mockData';
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true);
+    // const [loading, setLoading] = useState(true); // Removed as per instruction
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }
-        setLoading(false);
+        // setLoading(false); // Removed as per instruction
     }, []);
 
     const login = async (username, password) => {
@@ -23,7 +24,16 @@ export const AuthProvider = ({ children }) => {
             localStorage.setItem('user', JSON.stringify(res.data));
             return { success: true };
         } catch (error) {
-            return { success: false, message: error.response?.data?.message || 'Login failed' };
+            console.warn("Backend connection failed, trying Demo Mode...");
+            // Demo Mode Fallback
+            const mockUser = MOCK_DATA.users.find(u => u.username === username && u.password === password);
+            if (mockUser) {
+                const demoUser = { ...mockUser, isDemo: true };
+                setUser(demoUser);
+                localStorage.setItem('user', JSON.stringify(demoUser));
+                return { success: true, isDemo: true };
+            }
+            return { success: false, error: error.response?.data?.error || "Login failed" };
         }
     };
 

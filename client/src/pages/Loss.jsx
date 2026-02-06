@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
+import { MOCK_DATA } from '../mockData';
 import CurrentHistory from '../components/CurrentHistory';
 
 export default function Loss() {
@@ -21,14 +22,20 @@ export default function Loss() {
 
     const fetchMaterials = async () => {
         try {
+            if (user?.isDemo) {
+                setMaterials(MOCK_DATA.materials);
+                setLoading(false);
+                return;
+            }
             const res = await axios.get(`${import.meta.env.VITE_API_URL}/materials`);
             setMaterials(res.data);
             setLoading(false);
         } catch (error) {
-            console.error('Error loading materials', error);
+            console.warn("API Error, using mock data");
+            setMaterials(MOCK_DATA.materials);
+            setLoading(false);
         }
     };
-
     const handleAddItem = () => {
         if (!selectedSku || quantity <= 0) return;
         const material = materials.find(m => m.sku === selectedSku);
@@ -48,6 +55,12 @@ export default function Loss() {
     const handleSubmit = async () => {
         try {
             if (cart.length === 0) return;
+
+            if (user?.isDemo) {
+                alert('Success (Demo Mode): Loss registered');
+                setCart([]);
+                return;
+            }
 
             await axios.post(`${import.meta.env.VITE_API_URL}/movements/loss`, {
                 userId: user.id,
