@@ -83,3 +83,5 @@ const CurrentHistory = () => {
         </div>
     );
 }
+
+export default CurrentHistory;
