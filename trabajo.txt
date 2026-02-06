@@ -1,0 +1,222 @@
+ndice
+1. RESUMEN EJECUTIVO ........................................................................................................ 3
+2. DEFINICIÓN DEL PROBLEMA Y CONTEXTO ................................................................... 3
+2.1 Diagnóstico Situacional .................................................................................................................... 3
+2.2 Objetivos del Proyecto ...................................................................................................................... 3
+3. ARQUITECTURA DE SOFTWARE Y DISEÑO TÉCNICO .................................................. 4
+3.1 Arquitectura Lógica (N-Capas) ....................................................................................................... 4
+3.2 Seguridad y Acceso ........................................................................................................................... 4
+4. METODOLOGÍA DE DESARROLLO ................................................................................... 4
+4.1 Planificación de Sprints (Roadmap) .............................................................................................. 4
+4.2 Artefactos de Gestión........................................................................................................................ 5
+5. REQUERIMIENTOS FUNCIONALES (HISTORIAS DE USUARIO)................................... 5
+6. ESTIMACIÓN DE COSTOS Y PRESUPUESTO .................................................................. 5
+7. ANÁLISIS DE RIESGOS Y PLAN DE CONTINGENCIA .................................................... 6
+8. IMPLICANCIAS DE IMPLEMENTACIÓN ............................................................................. 6
+8.1 Implicancias Organizacionales ....................................................................................................... 6
+8.2 Implicancias Tecnológicas .............................................................................................................. 7
+8.3 Implicancias Económicas ................................................................................................................ 7
+8.4 Implicancias Humanas ...................................................................................................................... 7
+9. CONCLUSIÓN ........................................................................................................................ 8
+10. ANEXOS.............................................................................................................................. 9
+ANEXO A: Modelo de Datos Relacional (MER) ........................................................................ 9
+ANEXO B: Diagrama de Casos de Uso (UML) ....................................................................... 10
+ANEXO C: Cronograma de Implementación (Carta Gantt) .................................................. 11
+3
+1. RESUMEN EJECUTIVO
+El presente informe detalla el diseño, planificación y análisis de viabilidad para la implementación
+de un sistema de gestión web en la empresa "Constructora Andina SpA". El proyecto aborda la
+problemática crítica del control de inventario en obra, específicamente la trazabilidad de
+entradas, la asignación de activos a trabajadores y el control de mermas.
+La solución tecnológica propuesta consiste en una plataforma web centralizada bajo arquitectura
+MVC, desarrollada con una metodología ágil (Scrum) para garantizar entregas incrementales. El
+análisis proyecta una mejora sustancial en la eficiencia operativa y una reducción estimada de
+pérdidas por merma no justificada.
+2. DEFINICIÓN DEL PROBLEMA Y CONTEXTO
+2.1 Diagnóstico Situacional
+Actualmente, la gestión de materiales en las obras de la empresa se realiza mediante procesos
+manuales descentralizados (cuadernos de cargo y planillas Excel no sincronizadas). Esta falta
+de digitalización ha generado:
+• Fuga de Activos: Desconocimiento de la ubicación real del inventario menor una vez
+que sale de bodega.
+• Mermas no Trazables: Imposibilidad de distinguir entre merma por uso legítimo, daño
+accidental o sustracción.
+• Ineficiencia Operativa: Tiempos excesivos en la solicitud y entrega de materiales a las
+cuadrillas.
+2.2 Objetivos del Proyecto
+Objetivo General: Diseñar e implementar un Sistema de Gestión Web que garantice la
+trazabilidad del 100% del ciclo de vida de los materiales (ingreso, asignación y baja) en la obra.
+Objetivos Específicos:
+1. Digitalizar Entradas: Automatizar el registro de guías de despacho para actualización
+inmediata de stock.
+2. Controlar Asignaciones: Implementar un sistema de "Cargo y Descargo" digital por
+trabajador.
+3. Gestionar Mermas: Tipificar y cuantificar las pérdidas de material para reportes de
+gestión.
+4. Reportabilidad: Proveer dashboards en tiempo real para la toma de decisiones
+gerenciales.
+4
+3. ARQUITECTURA DE SOFTWARE Y DISEÑO TÉCNICO
+Se ha definido una arquitectura robusta que prioriza la integridad de los datos y la escalabilidad
+del sistema.
+3.1 Arquitectura Lógica (N-Capas)
+El sistema operará bajo un modelo Cliente-Servidor desacoplado mediante una API RESTful:
+• Capa de Presentación (Frontend): Interfaz web desarrollada como Single Page
+Application (SPA) utilizando tecnologías reactivas (ej. React.js o Vue.js). Esto permite una
+experiencia de usuario fluida, similar a una aplicación de escritorio.
+• Capa de Aplicación (Backend): Servidor central (Node.js/Python) encargado de la
+lógica de negocio, validaciones de stock, cálculo de mermas y seguridad.
+• Capa de Datos (Persistencia): Base de datos relacional (SQL) diseñada para mantener
+la integridad referencial estricta entre las tablas
+de Materiales, Trabajadores y Movimientos.
+3.2 Seguridad y Acceso
+• Autenticación: Implementación del estándar JWT (JSON Web Tokens) para sesiones
+seguras y sin estado.
+• Control de Acceso (RBAC): Sistema de permisos basado en roles:
+o Administrador: Gestión total y configuración.
+o Bodeguero: Registro de movimientos (Input/Output).
+o Supervisor: Visualización de reportes y validación de mermas.
+4. METODOLOGÍA DE DESARROLLO
+Se utilizará la metodología ágil Scrum, justificada por la necesidad de adaptar el software a la
+realidad cambiante de la obra y validar funcionalidades tempranamente con los usuarios finales.
+4.1 Planificación de Sprints (Roadmap)
+El desarrollo se estructura en 4 ciclos iterativos (Sprints) de 2 semanas:
+• Sprint 1 - Core & Inventario: Configuración de ambiente, Base de Datos y Módulo de
+Registro de Entradas (Stock In).
+• Sprint 2 - Flujo de Asignación: Módulo de entrega a trabajadores (Stock Out) y
+devoluciones.
+• Sprint 3 - Gestión de Mermas & Solicitudes: Lógica de negocio para bajas por
+daño/pérdida y módulo de solicitud web.
+5
+• Sprint 4 - Inteligencia de Negocios: Reportes exportables, Dashboards de KPIs y cierre
+de documentación.
+4.2 Artefactos de Gestión
+• Product Backlog: Listado priorizado de Historias de Usuario.
+• Definition of Done (DoD): Criterios de calidad (código revisado, pruebas
+unitarias pasadas) requeridos para dar por finalizada una tarea.
+5. REQUERIMIENTOS FUNCIONALES (HISTORIAS DE USUARIO)
+El alcance funcional se define a través de las siguientes historias clave:
+• HU-01 (Entradas): "Como Bodeguero, quiero registrar el ingreso de materiales
+escaneando o digitando la guía de despacho para actualizar el stock disponible."
+• HU-02 (Asignación): "Como Capataz, quiero asignar herramientas a un trabajador
+mediante su RUT, generando un comprobante digital de responsabilidad."
+• HU-03 (Mermas): "Como Supervisor, quiero registrar la baja de material indicando el
+motivo (Robo, Daño, Vencimiento) para justificar la reducción de inventario sin afectar la
+contabilidad erróneamente."
+• HU-04 (Solicitud Remota): "Como Jefe de Terreno, quiero solicitar materiales vía web
+para que sean preparados en bodega antes de mi llegada."
+• HU-05 (Reportes): "Como Gerente, quiero visualizar un informe de consumo por
+trabajador y tipo de material para detectar desviaciones."
+6. ESTIMACIÓN DE COSTOS Y PRESUPUESTO
+Para determinar la viabilidad económica del proyecto, se ha realizado una estimación de costos
+basada en el desarrollo de un MVP (Producto Mínimo Viable) con una duración de 2 meses.
+Ítem Detalle Cantidad /
+Duración
+Costo Unitario
+(CLP)
+Total Estimado
+(CLP)
+Recursos
+Humanos Desarrollador Full Stack 320 hrs (2 meses) $15.000 $4.800.000
+Recursos
+Humanos
+Scrum Master / Jefe
+Proyecto 40 hrs $25.000 $1.000.000
+Infraestructura Servidor Cloud / Dominio 1 año $120.000 $120.000
+Hardware Tablets robustas
+(Bodega) 2 unidades $150.000 $300.000
+Contingencia Margen de riesgo (10%) - - $622.000
+6
+Ítem Detalle Cantidad /
+Duración
+Costo Unitario
+(CLP)
+Total Estimado
+(CLP)
+TOTAL
+PROYECTO $6.842.000
+7. ANÁLISIS DE RIESGOS Y PLAN DE CONTINGENCIA
+Se han identificado los riesgos críticos para la operación del sistema en un entorno de
+construcción, definiendo sus respectivos planes de mitigación.
+Riesgo
+Detectado Probabilidad Impacto Plan de Mitigación (Contingencia)
+Falla de Internet
+en Obra Alta Crítico
+Implementación de capacidad Offline-First (PWA) que
+permita operar localmente y sincronizar datos al recuperar
+conexión.
+Resistencia al
+Cambio Media Alto
+Plan de capacitación presencial y diseño de interfaz
+simplificada (UI) enfocada en usuarios con baja
+alfabetización digital.
+Pérdida de Datos Baja Catastrófico Política de backups automatizados diarios (snapshots) en
+servidor espejo geográficamente redundante.
+Robo de
+Dispositivos Media Medio Bloqueo remoto de equipos y sesiones de usuario con
+tiempo de expiración corto por inactividad.
+8. IMPLICANCIAS DE IMPLEMENTACIÓN
+El despliegue del sistema conlleva transformaciones profundas en la organización que deben ser
+gestionadas.
+8.1 Implicancias Organizacionales
+• Estandarización: La implementación fuerza a la empresa a unificar la nomenclatura de
+sus materiales (creación de Maestro de SKU), eliminando la informalidad en los registros.
+• Profesionalización de Bodega: El rol de bodeguero evoluciona de un perfil operativo a
+uno administrativo-técnico, requiriendo mayor responsabilidad en la gestión de datos.
+7
+8.2 Implicancias Tecnológicas
+• Digitalización: Se elimina el uso de papel para el control de inventario, exigiendo una
+infraestructura mínima de red y hardware en zonas que tradicionalmente no la tenían.
+• Soporte Continuo: La dependencia del sistema implica la necesidad de establecer un
+protocolo de soporte técnico para resolver incidencias de software o hardware.
+8.3 Implicancias Económicas
+• Retorno de Inversión (ROI): Aunque existe un costo inicial de desarrollo, se proyecta
+una recuperación de la inversión en 6 meses mediante la reducción de compras
+innecesarias (por falsos quiebres de stock) y la disminución de mermas por robo hormiga.
+• Control de Costos: La asignación precisa de mermas a centros de costo específicos
+permitirá una contabilidad de obra más exacta.
+8.4 Implicancias Humanas
+• Transparencia vs. Control: El sistema aumenta la visibilidad sobre el desempeño de los
+trabajadores y el uso de recursos. Esto puede generar resistencia inicial en el personal,
+la cual debe ser manejada mediante una comunicación clara sobre los beneficios del
+orden y la disponibilidad de herramientas.
+8
+9. CONCLUSIÓN
+El diseño del Sistema de Gestión para Constructora Andina SpA representa una solución integral
+que trasciende la mera actualización tecnológica. Al abordar el problema desde una perspectiva
+metodológica y técnica, se garantiza no solo la construcción de un software funcional, sino una
+herramienta de cambio organizacional.
+La aplicación de Scrum asegura que el producto final esté alineado con las necesidades reales
+del terreno, mientras que la arquitectura robusta y el análisis de riesgos aseguran la continuidad
+operativa. En conclusión, la implementación de este sistema transformará el área de logística de
+la empresa, convirtiendo los datos de inventario en activos estratégicos para la toma de
+decisiones y la rentabilidad de los proyectos.
+9
+10. ANEXOS
+ANEXO A: Modelo de Datos Relacional (MER)
+El siguiente diagrama representa la estructura lógica de la base de datos diseñada para el
+sistema SGI-AM. Se ha optado por un modelo relacional normalizado para garantizar la
+integridad de las transacciones y evitar la redundancia de datos.
+Aspectos técnicos destacados:
+• Separación Cabecera-Detalle: Se desacopla la entidad MOVIMIENTOS (folio, fecha,
+responsable) de DETALLE_MOVIMIENTO (items específicos), permitiendo múltiples
+materiales en una sola operación.
+• Integridad Referencial: Las llaves foráneas aseguran que no se puedan registrar
+movimientos de materiales inexistentes o asignar herramientas a trabajadores inactivos.
+10
+ANEXO B: Diagrama de Casos de Uso (UML)
+Este diagrama ilustra el alcance funcional del sistema y las interacciones permitidas para cada
+perfil de usuario (Actores). Delimita las fronteras del software y visualiza la dependencia entre
+procesos.
+Descripción de la interacción:
+• Actores: Se definen tres roles con permisos escalonados: Bodeguero (Operativo),
+Supervisor (Validación) y Administrador (Gestión).
+• Lógica de Negocio: Se utilizan relaciones de inclusión (<<include>>) para demostrar
+procesos automáticos obligatorios; por ejemplo, el sistema fuerza la actualización del
+stock (Actualizar Inventario) cada vez que se concreta una entrada o salida, garantizando
+que el inventario teórico siempre coincida con los movimientos registrados.
+11
+ANEXO C: Cronograma de Implementación (Carta Gantt)
+A continuación se detalla la planificación temporal del proyecto, estructurada en 4 Sprints
+quincenales bajo la metodología Scrum. Este cronograma incluye las fases de desarrollo,
+pruebas (QA) y despliegue final.

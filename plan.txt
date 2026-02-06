@@ -1,0 +1,79 @@
+Entiendo perfectamente el enfoque. El profesor pide un informe de implicancias y el diseño de la solución, pero construir el software te da una ventaja competitiva enorme para tu TAP y demuestra dominio técnico real.
+
+Hacerlo local es una decisión estratégica muy inteligente por varias razones:
+
+Velocidad: No pierdes tiempo configurando infraestructuras en la nube (AWS/Azure) ni lidiando con latencias.
+
+
+Cero Costo: Mantienes el presupuesto bajo control.
+
+Entorno Controlado: Evitas fallos de conexión durante la presentación.
+
+Aquí tienes el README.md actualizado y adaptado para que sea la documentación técnica de tu sistema local, cumpliendo con cada punto solicitado por el profesor.
+
+Sistema de Gestión de Inventario (SGI) - Constructora Andina SpA
+Este sistema ha sido desarrollado como parte del Trabajo de Aplicación Práctica, enfocado en resolver la falta de trazabilidad y digitalización en el control de materiales.
+
+📋 Requerimientos del Proyecto
+De acuerdo a lo solicitado, el sistema cubre las siguientes necesidades:
+
+Control de Entradas: Registro digital de materiales recibidos en bodega.
+
+Asignación a Trabajadores: Control de "Cargo y Descargo" vinculado al RUT del personal.
+
+Gestión de Merma: Registro y tipificación de pérdidas (robo, daño, etc.).
+
+Reportabilidad: Generación de informes de consumo por trabajador y tipo.
+
+🛠️ Arquitectura Técnica (Local Stack)
+Para garantizar una ejecución fluida en entorno local, se definió una arquitectura desacoplada:
+
+
+Frontend: React.js / Vue.js operando como una SPA (Single Page Application).
+
+
+Backend: API REST desarrollada en Node.js o Python para la lógica de negocio.
+
+
+Base de Datos: SQLite o PostgreSQL local para persistencia de datos relacionales.
+
+💾 Modelo de Datos (Esquema SQL)
+El sistema utiliza un modelo relacional normalizado para asegurar la integridad de la información:
+
+
+Materiales: sku (PK), nombre, stock_actual, stock_critico.
+
+
+Trabajadores: rut (PK), nombre, cargo, estado.
+
+
+Movimientos: id, tipo (Entrada/Asignación/Merma), fecha, user_id.
+
+🔄 Metodología de Desarrollo
+Se aplicó Scrum para permitir entregas incrementales y validación temprana de funcionalidades:
+
+
+Sprint 1: Configuración de BD y Módulo de Entradas (Stock In).
+
+
+Sprint 2: Flujo de Asignación y Devoluciones.
+
+
+Sprint 3: Gestión de Mermas y Lógica de Negocio.
+
+
+Sprint 4: Dashboards, Reportes y Documentación Final.
+
+⚠️ Implicancias de la Implementación
+El informe adjunto detalla las transformaciones necesarias para la empresa:
+
+
+Organizacionales: Estandarización de nomenclaturas (Maestro de SKU).
+
+
+Económicas: Retorno de inversión (ROI) proyectado en 6 meses por reducción de mermas.
+
+
+Humanas: Necesidad de capacitación para mitigar la resistencia al cambio tecnológico.
+
+¿Te parece bien esta estructura? Si quieres, puedo generarte el código base para la tabla de Movimientos en SQL, que es la parte más compleja del sistema.
