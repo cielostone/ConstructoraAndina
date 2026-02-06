@@ -11,9 +11,12 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
+const isProduction = import.meta.env.PROD;
+const basename = isProduction ? '/ConstructoraAndina' : '/';
+
 function App() {
   return (
-    <Router>
+    <Router basename={basename}>
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<Login />} />
