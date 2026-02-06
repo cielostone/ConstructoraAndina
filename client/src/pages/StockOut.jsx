@@ -24,8 +24,8 @@ export default function StockOut() {
     const fetchData = async () => {
         try {
             const [matRes, workerRes] = await Promise.all([
-                axios.get('http://localhost:3001/api/materials'),
-                axios.get('http://localhost:3001/api/workers')
+                axios.get(`${import.meta.env.VITE_API_URL}/materials`),
+                axios.get(`${import.meta.env.VITE_API_URL}/workers`)
             ]);
             setMaterials(matRes.data);
             setWorkers(workerRes.data);
@@ -58,7 +58,7 @@ export default function StockOut() {
                 return;
             }
 
-            await axios.post('http://localhost:3001/api/movements/out', {
+            await axios.post(`${import.meta.env.VITE_API_URL}/movements/out`, {
                 userId: user.id,
                 workerRut: selectedWorker,
                 items: cart

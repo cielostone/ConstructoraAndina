@@ -21,7 +21,7 @@ export default function Loss() {
 
     const fetchMaterials = async () => {
         try {
-            const res = await axios.get('http://localhost:3001/api/materials');
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/materials`);
             setMaterials(res.data);
             setLoading(false);
         } catch (error) {
@@ -49,7 +49,7 @@ export default function Loss() {
         try {
             if (cart.length === 0) return;
 
-            await axios.post('http://localhost:3001/api/movements/loss', {
+            await axios.post(`${import.meta.env.VITE_API_URL}/movements/loss`, {
                 userId: user.id,
                 items: cart
             });

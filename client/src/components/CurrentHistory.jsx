@@ -6,7 +6,7 @@ export default function CurrentHistory() {
 
     const fetchHistory = async () => {
         try {
-            const res = await axios.get('http://localhost:3001/api/movements/recent');
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/movements/recent`);
             setMovements(res.data);
         } catch (error) {
             console.error("Error fetching history", error);

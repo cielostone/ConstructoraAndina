@@ -10,7 +10,7 @@ export default function Reports() {
 
     const fetchMaterials = async () => {
         try {
-            const res = await axios.get('http://localhost:3001/api/materials');
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/materials`);
             setMaterials(res.data);
         } catch (error) {
             console.error('Error loading materials', error);

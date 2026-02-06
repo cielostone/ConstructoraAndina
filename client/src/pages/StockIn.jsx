@@ -21,7 +21,7 @@ export default function StockIn() {
 
     const fetchMaterials = async () => {
         try {
-            const res = await axios.get('http://localhost:3001/api/materials');
+            const res = await axios.get(`${import.meta.env.VITE_API_URL}/materials`);
             setMaterials(res.data);
             setLoading(false);
         } catch (error) {
@@ -42,7 +42,7 @@ export default function StockIn() {
         try {
             if (cart.length === 0) return;
 
-            await axios.post('http://localhost:3001/api/movements/in', {
+            await axios.post(`${import.meta.env.VITE_API_URL}/movements/in`, {
                 userId: user.id,
                 items: cart
             });

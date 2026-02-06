@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (username, password) => {
         try {
             // In a real app, use environment variable for API URL
-            const res = await axios.post('http://localhost:3001/api/login', { username, password });
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/login`, { username, password });
             setUser(res.data);
             localStorage.setItem('user', JSON.stringify(res.data));
             return { success: true };
