@@ -6,14 +6,14 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    // const [loading, setLoading] = useState(true); // Removed as per instruction
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const storedUser = localStorage.getItem('user');
         if (storedUser) {
             setUser(JSON.parse(storedUser));
         }
-        // setLoading(false); // Removed as per instruction
+        setLoading(false);
     }, []);
 
     const login = async (username, password) => {
