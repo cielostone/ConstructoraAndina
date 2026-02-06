@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
@@ -11,12 +11,12 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
-const isProduction = import.meta.env.PROD;
-const basename = isProduction ? '/ConstructoraAndina' : '/';
+// const isProduction = import.meta.env.PROD;
+// const basename = isProduction ? '/ConstructoraAndina' : '/';
 
 function App() {
   return (
-    <Router basename={basename}>
+    <Router>
       <AuthProvider>
         <Routes>
           <Route path="/login" element={<Login />} />
