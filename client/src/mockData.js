@@ -16,8 +16,33 @@ export const MOCK_DATA = {
         { rut: '33333333-3', name: 'Carlos Ruiz', status: 'ACTIVE' }
     ],
     movements: [
-        { id: 1, type: 'IN', quantity: 100, date: new Date().toISOString(), Material: { name: 'Ladrillo Fiscal' }, User: { username: 'bodeguero' } },
-        { id: 2, type: 'OUT', quantity: 2, date: new Date().toISOString(), Material: { name: 'Taladro Percutor' }, User: { username: 'bodeguero' } },
-        { id: 3, type: 'LOSS', quantity: 5, date: new Date().toISOString(), Material: { name: 'Cemento 25kg' }, User: { username: 'supervisor' } }
+        {
+            id: 1,
+            type: 'IN',
+            date: new Date().toISOString(),
+            User: { username: 'bodeguero' },
+            MovementDetails: [
+                { quantity: 100, Material: { name: 'Ladrillo Fiscal' } }
+            ]
+        },
+        {
+            id: 2,
+            type: 'OUT',
+            date: new Date().toISOString(),
+            User: { username: 'bodeguero' },
+            Worker: { name: 'Juan Pérez' },
+            MovementDetails: [
+                { quantity: 2, Material: { name: 'Taladro Percutor' } }
+            ]
+        },
+        {
+            id: 3,
+            type: 'LOSS',
+            date: new Date().toISOString(),
+            User: { username: 'supervisor' },
+            MovementDetails: [
+                { quantity: 5, Material: { name: 'Cemento 25kg' } }
+            ]
+        }
     ]
 };
